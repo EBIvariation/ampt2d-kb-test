@@ -8,6 +8,7 @@ pipeline {
     stage('Build') {
           steps {
             sh 'mvn clean test'
+            cucumber 'target/cucumber.json'
           }
        }
   }
