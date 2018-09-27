@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {"pretty", "html:target/cucumber", "json:target/cucumber.json"},
         features = {"classpath:features"},
-        tags = "~@Ignore")
+        tags = "not @Ignore")
 public class KnowledgeBaseServicesTest {
 
 }
