@@ -82,18 +82,15 @@ public class StepDefinitions {
         response = request.contentType(ContentType.JSON).body(payload.toString()).post(path).then();
     }
 
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of individual datasets$")
-    public void hitUrlWithRequestForIndividualDataset(String path, String jsonFile) throws Throwable {
+    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of dataset (.*)$")
+    public void hitUrlWithRequestForIndividualDataset(String path, String jsonFile, String datasetName)
+            throws Throwable {
         String payload = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + jsonFile + JSON_FILE_EXTENSION).toURI())));
         Map<String, List<String>> datasetsToPhenotypes = getDatasetToPhenotypes();
-        for (Map.Entry datasetToPhenotypes : datasetsToPhenotypes.entrySet()) {
-            String datasetPayload = payload;
-            datasetPayload = datasetPayload.replaceAll("INPUT_DATASET", datasetToPhenotypes.getKey().toString());
-            datasetPayload = datasetPayload.replaceAll("\"PHENOTYPES_OF_DATASET\"", datasetToPhenotypes.getValue().toString());
-            response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
-            datasetsResponse.put(datasetToPhenotypes.getKey().toString(), response);
-        }
+        String datasetPayload = getInputJsonForDataset(datasetName, payload, datasetsToPhenotypes);
+        response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
+        datasetsResponse.put(datasetName, response);
     }
 
     @Then("^Response returns status is Up$")
@@ -119,14 +116,20 @@ public class StepDefinitions {
         response.contentType(ContentType.JSON).body(equalTo(payload));
     }
 
-    @Then("^Response returns with valid output data of each datasets matching ([^ ]*) respectively$")
-    public void responseReturnsWithValidOutputDataOfEachDataset(String jsonFile) throws Exception {
+    @Then("^Response returns with valid output data of ([^ ]*) contained in ([^ ]*)$")
+    public void responseReturnsWithValidOutputDataOfEachDataset(String datasetName, String jsonFile) throws Exception {
         String payload = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + jsonFile + JSON_FILE_EXTENSION).toURI())));
-        for (Map.Entry<String, ValidatableResponse> datasetResponse : datasetsResponse.entrySet()) {
-            JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetResponse.getKey())
-                    .toString(), datasetResponse.getValue().extract().body().asString(), true);
-        }
+        JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetName)
+                .toString(), datasetsResponse.get(datasetName).extract().body().asString(), true);
+    }
+
+    private String getInputJsonForDataset(String datasetName, String payload, Map<String, List<String>> datasetsToPhenotypes) {
+        String datasetPayload = payload;
+        datasetPayload = datasetPayload.replaceAll("INPUT_DATASET", datasetName);
+        datasetPayload = datasetPayload.replaceAll("\"PHENOTYPES_OF_DATASET\"", datasetsToPhenotypes.get
+                (datasetName).toString());
+        return datasetPayload;
     }
 
     private Map<String, List<String>> getDatasetToPhenotypes() throws Exception {
