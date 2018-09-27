@@ -43,6 +43,8 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.not;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {KnowledgeBaseApiConfiguration.class})
@@ -120,8 +122,11 @@ public class StepDefinitions {
     public void responseReturnsWithValidOutputDataOfEachDataset(String datasetName, String jsonFile) throws Exception {
         String payload = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + jsonFile + JSON_FILE_EXTENSION).toURI())));
-        JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetName)
-                .toString(), datasetsResponse.get(datasetName).extract().body().asString(), true);
+        ValidatableResponse response = datasetsResponse.get(datasetName);
+        response.body("numRecords", greaterThan(0));
+        response.body(not(containsString("null")));
+        JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetName).toString(), response.extract().body().asString(),
+                true);
     }
 
     private String getInputJsonForDataset(String datasetName, String payload, Map<String, List<String>> datasetsToPhenotypes) {
