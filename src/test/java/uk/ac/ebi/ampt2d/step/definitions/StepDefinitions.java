@@ -125,7 +125,7 @@ public class StepDefinitions {
                 .getResource(PAYLOAD_PATH + "/" + jsonFile + JSON_FILE_EXTENSION).toURI())));
         for (Map.Entry<String, ValidatableResponse> datasetResponse : datasetsResponse.entrySet()) {
             JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetResponse.getKey())
-                    .toString(), datasetResponse.getValue().extract().body().jsonPath().get().toString(), true);
+                    .toString(), datasetResponse.getValue().extract().body().asString(), true);
         }
     }
 
