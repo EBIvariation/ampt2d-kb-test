@@ -15,17 +15,21 @@
  * limitations under the License.
  *
  */
-package uk.ac.ebi.ampt2d;
+package uk.ac.ebi.ampt2d.configuration;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
-import org.junit.runner.RunWith;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import uk.ac.ebi.ampt2d.KnowledgeBaseApi;
 
-@RunWith(Cucumber.class)
-@CucumberOptions(
-        plugin = {"pretty", "html:target/cucumber", "json:target/cucumber.json"},
-        features = {"classpath:features"},
-        tags = "~@Ignore")
-public class KnowledgeBaseServicesTest {
+@Configuration
+@EnableConfigurationProperties
+public class KnowledgeBaseApiConfiguration {
 
+    @Bean
+    @ConfigurationProperties(prefix = "kb.prod")
+    public KnowledgeBaseApi getKnowledgeBaseApi() {
+        return new KnowledgeBaseApi();
+    }
 }

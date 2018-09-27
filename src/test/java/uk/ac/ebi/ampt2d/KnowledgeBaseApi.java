@@ -17,15 +17,34 @@
  */
 package uk.ac.ebi.ampt2d;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
-import org.junit.runner.RunWith;
+public class KnowledgeBaseApi {
+    private String baseUri;
+    private String apiVersion;
 
-@RunWith(Cucumber.class)
-@CucumberOptions(
-        plugin = {"pretty", "html:target/cucumber", "json:target/cucumber.json"},
-        features = {"classpath:features"},
-        tags = "~@Ignore")
-public class KnowledgeBaseServicesTest {
+    public KnowledgeBaseApi() {
+    }
 
+    public String getBaseUri() {
+        return baseUri;
+    }
+
+    public void setBaseUri(String baseUri) {
+        this.baseUri = baseUri;
+    }
+
+    public String getApiVersion() {
+        return apiVersion;
+    }
+
+    public void setApiVersion(String apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
+    @Override
+    public String toString() {
+        return "KnowledgeBaseApi{" +
+                "baseUri='" + baseUri + '\'' +
+                ", apiVersion='" + apiVersion + '\'' +
+                '}';
+    }
 }
