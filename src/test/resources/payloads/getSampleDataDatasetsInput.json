@@ -1,0 +1,18 @@
+{
+  "passback": "123abc",
+  "entity": "variant",
+  "page_number": 0,
+  "limit": 1,
+  "count": false,
+  "distribution": true,
+  "bin_number": 2,
+  "properties":    {
+    "cproperty": [],
+    "orderBy":    [],
+    "dproperty" : {  "BMI":["INPUT_DATASET"] } ,
+    "pproperty" : { }} ,
+  "filters":    [
+    {"dataset_id": "INPUT_DATASET", "phenotype": "b", "operand": "ID", "operator": "LT", "value": "ZZZZZ", "operand_type": "STRING"}
+  ]
+
+}

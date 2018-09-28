@@ -24,6 +24,7 @@ import com.jayway.restassured.response.ValidatableResponse;
 import com.jayway.restassured.specification.RequestSpecification;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -36,6 +37,7 @@ import uk.ac.ebi.ampt2d.KnowledgeBaseApi;
 import uk.ac.ebi.ampt2d.configuration.KnowledgeBaseApiConfiguration;
 import uk.ac.ebi.ampt2d.payload.JsonPayload;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {KnowledgeBaseApiConfiguration.class})
@@ -55,7 +58,6 @@ public class StepDefinitions {
     private KnowledgeBaseApi knowledgeBaseApi;
     private RequestSpecification request;
     private ValidatableResponse response;
-    private Map<String, ValidatableResponse> datasetsResponse = new HashMap<>();
 
     @Before
     public void before(Scenario scenario) throws Exception {
@@ -73,33 +75,8 @@ public class StepDefinitions {
     }
 
     @When("^Hit Url \"([^\"]*)\"$")
-    public void whenHitRequest(String path) {
+    public void whenHitGetRequest(String path) {
         response = request.get(path).then();
-    }
-
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload$")
-    public void hitUrlWithRequestForBasicProperties(String path, String jsonFile) throws Throwable {
-        String payload = jsonPayload.getPayload(jsonFile);
-        response = request.contentType(ContentType.JSON).body(payload.toString()).post(path).then();
-    }
-
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of dataset (.*)$")
-    public void hitUrlWithRequestForIndividualDatasetForGetData(String path, String jsonFile, String datasetName)
-            throws Throwable {
-        String payload = jsonPayload.getPayload(jsonFile);
-        Map<String, List<String>> datasetsToPhenotypes = getDatasetToPhenotypes();
-        String datasetPayload = getInputJsonForDataset(datasetName, payload, datasetsToPhenotypes);
-        response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
-        datasetsResponse.put(datasetName, response);
-    }
-
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of sample dataset (.*)$")
-    public void hitUrlWithRequestForIndividualDatasetForGetSampleData(String path, String jsonFile, String datasetName)
-            throws Throwable {
-        String payload = jsonPayload.getPayload(jsonFile);
-        String datasetPayload = payload.replaceAll("INPUT_DATASET", datasetName);
-        response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
-        datasetsResponse.put(datasetName, response);
     }
 
     @Then("^Response returns status is Up$")
@@ -118,38 +95,120 @@ public class StepDefinitions {
         response.body("is_error", equalTo(false));
     }
 
+    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload$")
+    public void hitUrlWithRequestForCommonPropertyData(String path, String jsonFile) throws Throwable {
+        String payload = jsonPayload.getPayload(jsonFile);
+        response = request.contentType(ContentType.JSON).body(payload.toString()).post(path).then();
+    }
+
     @Then("^Response returns valid json in response to (.*?)$")
     public void responseReturnsValidJson(String jsonFile) throws Throwable {
         String payload = jsonPayload.getPayload(jsonFile);
         response.contentType(ContentType.JSON).body(equalTo(payload));
     }
 
-    @Then("^Response returns with valid output data of ([^ ]*) contained in ([^ ]*)$")
+    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of dataset ([^ ]*)$")
+    public void hitUrlWithRequestForIndividualDatasetForGetData(String path, String jsonFile, String datasetName)
+            throws Throwable {
+        String payload = jsonPayload.getPayload(jsonFile);
+        Map<String, List<String>> datasetsToPhenotypes = getDatasetToPhenotypes();
+        String datasetPayload = getInputJsonForGetData(datasetName, payload, datasetsToPhenotypes);
+        response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
+    }
+
+    @Then("^Number of records returned is greater than zero$")
+    public void numberOfRecordsReturnedIsGreaterThanZero() throws Throwable {
+        response.body("numRecords", greaterThan(0));
+    }
+
+    @And("^Response contains all the phenotypes of (.*)$")
+    public void responseContainsAllThePhenotypesOfTheDatasetName(String datasetName) throws Throwable {
+        List<String> expectedPhenotypes = getDatasetToPhenotypes().get(datasetName);
+        expectedPhenotypes.stream().forEach(expectedPhenotype -> response.body(containsString(expectedPhenotype)));
+    }
+
+    @And("^None of the properties in the response is null$")
+    public void noneOfThePropertiesInHteResponseIsNullForTheDataset() throws Throwable {
+        response.body(not(containsString("null")));
+    }
+
+    @And("^BETA and P_Value is returned for all phenotypes$")
+    public void betaAndP_ValueIsReturnedForAllPhenotypesOfTheDataset() throws Throwable {
+        response.body(containsString("P_VALUE")).body(containsString("BETA"));
+    }
+
+    @And("^Response returns with valid output data of ([^ ]*) contained in ([^ ]*)$")
     public void responseReturnsWithValidOutputDataOfEachDataset(String datasetName, String jsonFile) throws Exception {
         String payload = jsonPayload.getPayload(jsonFile);
-        ValidatableResponse response = datasetsResponse.get(datasetName);
-        response.body("numRecords", greaterThan(0));
-        response.body(not(containsString("null")));
         JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetName).toString(), response.extract().body().asString(),
                 true);
     }
 
-    private String getInputJsonForDataset(String datasetName, String payload, Map<String, List<String>> datasetsToPhenotypes) {
-        String datasetPayload = payload;
+    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) with ([^ ]*) and unknown phenotype\\(([^)]*)\\)$")
+    public void hitGetDataUrlWithUnknownPhenotype(String path, String jsonFile, String datasetName, String phenotype)
+            throws Throwable {
+        String inputPayload = jsonPayload.getPayload(jsonFile);
+        inputPayload = inputPayload.replaceAll("INPUT_DATASET", datasetName);
+        String unknownPhenotypes = "[\"" + phenotype + "\"]";
+        inputPayload = inputPayload.replaceAll("\"PHENOTYPES_OF_DATASET\"", unknownPhenotypes);
+        response = request.contentType(ContentType.JSON).body(inputPayload.toString()).post(path).then();
+    }
+
+    @And("^Response returns output of ([^ ]*) without BETA and P_Value$")
+    public void responseReturnsWithoutBETAAndP_Value(String datasetName) throws Throwable {
+        response.body(not(containsString("BETA"))).body(not(containsString("P_VALUE")));
+    }
+
+    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*)$")
+    public void hitUrlWithRequestForIndividualDatasetForGetSampleData(String path, String jsonFile, String datasetName)
+            throws Throwable {
+        String payload = jsonPayload.getPayload(jsonFile);
+        String datasetPayload = payload.replaceAll("INPUT_DATASET", datasetName);
+        response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
+    }
+
+    @And("^Response returns with valid sampleData of ([^ ]*) contained in (.*)$")
+    public void responseReturnsWithValidSampleDataForDataset(String datasetName, String jsonFile) throws Throwable {
+        String payload = jsonPayload.getPayload(jsonFile);
+        System.out.println(response.extract().body().asString());
+        System.out.println(JsonPath.read(payload, "$." + datasetName).toString());
+        JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetName).toString(), response.extract().body().asString(),
+                true);
+    }
+
+    @Then("^Response returns error that did not find property in metadata for filter$")
+    public void responseReturnsErrorThatDidNotFindPropertyForFilter() throws Throwable {
+        response.body("is_error", equalTo(true));
+        response.body("error_message", startsWith("Did not find property in metadata for filter"));
+    }
+
+    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*) with (\\w*) phenotype$")
+    public void hitGetSampleDataWithSAMPLES_GWAS_EXTEND_mdvAndT2DPhenotype(String path, String jsonFile,
+          String datasetName, String phenotype) throws Throwable {
+        String datasetPayload = jsonPayload.getPayload(jsonFile);
         datasetPayload = datasetPayload.replaceAll("INPUT_DATASET", datasetName);
-        datasetPayload = datasetPayload.replaceAll("\"PHENOTYPES_OF_DATASET\"", datasetsToPhenotypes.get
-                (datasetName).toString());
-        return datasetPayload;
+        datasetPayload = datasetPayload.replaceAll("BMI", phenotype);
+        response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
+    }
+
+    private String getInputJsonForGetData(String datasetName, String payload, Map<String, List<String>> datasetsToPhenotypes) {
+        String inputDatasetPayloadForGetData = payload;
+        inputDatasetPayloadForGetData = inputDatasetPayloadForGetData.replaceAll("INPUT_DATASET", datasetName);
+        List<String> listOfPhenotypes = datasetsToPhenotypes.get(datasetName);
+        String listOfPhenotypesString = (listOfPhenotypes != null) ? listOfPhenotypes.toString() : new ArrayList<String>().toString();
+        inputDatasetPayloadForGetData = inputDatasetPayloadForGetData.replaceAll("\"PHENOTYPES_OF_DATASET\"", listOfPhenotypesString);
+        return inputDatasetPayloadForGetData;
     }
 
     private Map<String, List<String>> getDatasetToPhenotypes() throws Exception {
-        String payload = jsonPayload.getPayload("getMetadata");
+        String metadataPayload = jsonPayload.getPayload("getMetadata");
         Map<String, List<String>> datasetToPhenotypes = new HashMap<>();
-        List<Object> sampleGroups = JsonPath.read(payload, "$.experiments.[*].sample_groups[*]");
+        List<Object> sampleGroups = JsonPath.read(metadataPayload, "$.experiments.[*].sample_groups[*]");
         for (Object sampleGroup : sampleGroups) {
             String dataset = JsonPath.read(sampleGroup, "$.id");
             datasetToPhenotypes.put(dataset, JsonPath.read(sampleGroup, "$.phenotypes[*].name"));
         }
         return datasetToPhenotypes;
     }
+
 }

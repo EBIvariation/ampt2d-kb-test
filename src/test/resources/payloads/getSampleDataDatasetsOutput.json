@@ -1,0 +1,46 @@
+{
+  "SAMPLES_GWAS_EXTEND_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+  "distribution_array":[{"start_value":0.0,"end_value":31.6844,"count":5995},{"start_value":31.6844,"end_value":63.3688,"count":1138}],"passback":"123abc"},
+
+  "SAMPLES_GWAS_OxBB_mdv2":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":31.57205,"count":6357},{"start_value":31.57205,"end_value":63.1441,"count":722}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_7_illumina_GRS_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose",
+    "distribution":true,"distribution_array":[{"start_value":0.0,"end_value":35.67405,"count":2289},{"start_value":35.67405,"end_value":71.3481,"count":598}],"passback":"123abc"},
+
+  "SAMPLES_GWAS_OxBB_GRS_mdv2":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":31.57205,"count":6357},{"start_value":31.57205,"end_value":63.1441,"count":722}],"passback":"123abc"},
+
+  "SAMPLES_GWAS_EXTEND_GRS_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":31.6844,"count":5995},{"start_value":31.6844,"end_value":63.3688,"count":1138}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_36_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":35.28625,"count":2850},{"start_value":35.28625,"end_value":70.5725,"count":549}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_36_GRS_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":35.28625,"count":2850},{"start_value":35.28625,"end_value":70.5725,"count":549}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_7_exome_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":31.84715,"count":3479},{"start_value":31.84715,"end_value":63.6943,"count":1374}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_7_metabo_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":31.14485,"count":4907},{"start_value":31.14485,"end_value":62.2897,"count":2199}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_7_affymetrix_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":31.14485,"count":1703},{"start_value":31.14485,"end_value":62.2897,"count":1193}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_7_broad_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":31.5481,"count":1363},{"start_value":31.5481,"end_value":63.0962,"count":520}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_7_illumina_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":35.67405,"count":2289},{"start_value":35.67405,"end_value":71.3481,"count":598}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_7_affymetrix_GRS_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose",
+    "distribution":true,"distribution_array":[{"start_value":0.0,"end_value":31.14485,"count":1703},{"start_value":31.14485,"end_value":62.2897,"count":1193}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_7_broad_GRS_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":31.5481,"count":1363},{"start_value":31.5481,"end_value":63.0962,"count":520}],"passback":"123abc"},
+
+  "SAMPLES_GWAS_EXTEND_mdv1_T2D":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":1.0,"end_value":1.5,"count":5796},{"start_value":1.5,"end_value":2.0,"count":1347}],"passback":"123abc"}
+}

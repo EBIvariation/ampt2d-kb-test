@@ -6,12 +6,15 @@ import java.nio.file.Paths;
 public class JsonPayload {
     private static final String PAYLOAD_PATH = "payloads";
     private static final String JSON_FILE_EXTENSION = ".json";
+
     private static final String GET_METADATA = "getMetadata";
     private static final String GET_SAMPLE_METADATA = "getSampleMetadata";
     private static final String GET_DATA_DATASETS_INPUT = "getDataDatasetsInput";
     private static final String GET_DATA_DATASETS_OUTPUT = "getDataDatasetsOutput";
     private static final String GET_DATA_BASIC_INPUT = "getDataBasicInput";
     private static final String GET_DATA_BASIC_OUTPUT = "getDataBasicOutput";
+    private static final String GET_SAMPLE_DATA_DATASETS_INPUT = "getSampleDataDatasetsInput";
+    private static final String GET_SAMPLE_DATA_DATASETS_OUTPUT = "getSampleDataDatasetsOutput";
 
     private String getMetadata;
     private String getSampleMetadata;
@@ -19,6 +22,8 @@ public class JsonPayload {
     private String getDataDatasetsOutput;
     private String getDataBasicInput;
     private String getDataBasicOutput;
+    private String getSampleDataDatasetsInput;
+    private String getSampleDataDatasetsOutput;
 
     public JsonPayload() throws Exception {
         getMetadata = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
@@ -33,6 +38,10 @@ public class JsonPayload {
                 .getResource(PAYLOAD_PATH + "/" + GET_DATA_BASIC_INPUT + JSON_FILE_EXTENSION).toURI())));
         getDataBasicOutput = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + GET_DATA_BASIC_OUTPUT + JSON_FILE_EXTENSION).toURI())));
+        getSampleDataDatasetsInput = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_SAMPLE_DATA_DATASETS_INPUT + JSON_FILE_EXTENSION).toURI())));
+        getSampleDataDatasetsOutput = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_SAMPLE_DATA_DATASETS_OUTPUT + JSON_FILE_EXTENSION).toURI())));
     }
 
     public String getMetadata() {
@@ -57,6 +66,14 @@ public class JsonPayload {
 
     public String getDataBasicOutput() {
         return getDataBasicOutput;
+    }
+
+    public String getSampleDataDatasetsInput() {
+        return getSampleDataDatasetsInput;
+    }
+
+    public String getSampleDataDatasetsOutput() {
+        return getSampleDataDatasetsOutput;
     }
 
     public String getPayload(String payloadName) throws Exception {
