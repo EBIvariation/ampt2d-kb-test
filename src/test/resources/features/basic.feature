@@ -13,19 +13,19 @@ Feature: Knowledge Base Basic Endpoints Testing
   Scenario: Assert Production KB getMetadata returns metadata without error
     Given I'm using the production API environment
     When Hit Url "/getMetadata"
-    Then Response returns metadata without error
+    Then Response returns getMetadata without error
 
   Scenario: Assert Production KB getSampleMetadata returns SampleMetadata without error
     Given I'm using the production API environment
     When Hit Url "/getSampleMetadata"
-    Then Response returns sample metadata without error
+    Then Response returns getSampleMetadata without error
 
   Scenario: Assert Production KB getMetadata returns valid json
     Given I'm using the production API environment
     When Hit Url "/getMetadata"
-    Then Response returns valid metadata json
+    Then Response returns valid json in response to getMetadata
 
   Scenario: Assert Production KB getSampleMetadata returns valid json
     Given I'm using the production API environment
     When Hit Url "/getSampleMetadata"
-    Then Response returns valid sampleMetadata json
+    Then Response returns valid json in response to getSampleMetadata

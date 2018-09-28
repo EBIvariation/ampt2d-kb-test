@@ -34,9 +34,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.ebi.ampt2d.KnowledgeBaseApi;
 import uk.ac.ebi.ampt2d.configuration.KnowledgeBaseApiConfiguration;
+import uk.ac.ebi.ampt2d.payload.JsonPayload;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,9 +49,7 @@ import static org.hamcrest.Matchers.not;
 @SpringBootTest(classes = {KnowledgeBaseApiConfiguration.class})
 public class StepDefinitions {
 
-    private static final String PAYLOAD_PATH = "payloads";
-    private static final String JSON_FILE_EXTENSION = ".json";
-    private static final String METADATA = "metadata";
+    private static JsonPayload jsonPayload;
 
     @Autowired
     private KnowledgeBaseApi knowledgeBaseApi;
@@ -61,8 +58,11 @@ public class StepDefinitions {
     private Map<String, ValidatableResponse> datasetsResponse = new HashMap<>();
 
     @Before
-    public void before(Scenario scenario) {
+    public void before(Scenario scenario) throws Exception {
         request = RestAssured.with();
+        if (jsonPayload == null) {
+            jsonPayload = new JsonPayload();
+        }
     }
 
     @Given("^I'm using the production API environment$")
@@ -79,18 +79,25 @@ public class StepDefinitions {
 
     @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload$")
     public void hitUrlWithRequestForBasicProperties(String path, String jsonFile) throws Throwable {
-        String payload = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
-                .getResource(PAYLOAD_PATH + "/" + jsonFile + JSON_FILE_EXTENSION).toURI())));
+        String payload = jsonPayload.getPayload(jsonFile);
         response = request.contentType(ContentType.JSON).body(payload.toString()).post(path).then();
     }
 
     @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of dataset (.*)$")
-    public void hitUrlWithRequestForIndividualDataset(String path, String jsonFile, String datasetName)
+    public void hitUrlWithRequestForIndividualDatasetForGetData(String path, String jsonFile, String datasetName)
             throws Throwable {
-        String payload = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
-                .getResource(PAYLOAD_PATH + "/" + jsonFile + JSON_FILE_EXTENSION).toURI())));
+        String payload = jsonPayload.getPayload(jsonFile);
         Map<String, List<String>> datasetsToPhenotypes = getDatasetToPhenotypes();
         String datasetPayload = getInputJsonForDataset(datasetName, payload, datasetsToPhenotypes);
+        response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
+        datasetsResponse.put(datasetName, response);
+    }
+
+    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of sample dataset (.*)$")
+    public void hitUrlWithRequestForIndividualDatasetForGetSampleData(String path, String jsonFile, String datasetName)
+            throws Throwable {
+        String payload = jsonPayload.getPayload(jsonFile);
+        String datasetPayload = payload.replaceAll("INPUT_DATASET", datasetName);
         response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
         datasetsResponse.put(datasetName, response);
     }
@@ -111,17 +118,15 @@ public class StepDefinitions {
         response.body("is_error", equalTo(false));
     }
 
-    @Then("^Response returns valid (.*?) json$")
+    @Then("^Response returns valid json in response to (.*?)$")
     public void responseReturnsValidJson(String jsonFile) throws Throwable {
-        String payload = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
-                .getResource(PAYLOAD_PATH + "/" + jsonFile + JSON_FILE_EXTENSION).toURI())));
+        String payload = jsonPayload.getPayload(jsonFile);
         response.contentType(ContentType.JSON).body(equalTo(payload));
     }
 
     @Then("^Response returns with valid output data of ([^ ]*) contained in ([^ ]*)$")
     public void responseReturnsWithValidOutputDataOfEachDataset(String datasetName, String jsonFile) throws Exception {
-        String payload = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
-                .getResource(PAYLOAD_PATH + "/" + jsonFile + JSON_FILE_EXTENSION).toURI())));
+        String payload = jsonPayload.getPayload(jsonFile);
         ValidatableResponse response = datasetsResponse.get(datasetName);
         response.body("numRecords", greaterThan(0));
         response.body(not(containsString("null")));
@@ -138,8 +143,7 @@ public class StepDefinitions {
     }
 
     private Map<String, List<String>> getDatasetToPhenotypes() throws Exception {
-        String payload = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
-                .getResource(PAYLOAD_PATH + "/" + METADATA + JSON_FILE_EXTENSION).toURI())));
+        String payload = jsonPayload.getPayload("getMetadata");
         Map<String, List<String>> datasetToPhenotypes = new HashMap<>();
         List<Object> sampleGroups = JsonPath.read(payload, "$.experiments.[*].sample_groups[*]");
         for (Object sampleGroup : sampleGroups) {

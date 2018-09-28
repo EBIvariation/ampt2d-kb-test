@@ -8,7 +8,7 @@ Feature: Knowledge Base getData endpoint Testing
   Scenario: Test basic getData call works
     Given I'm using the production API environment
     When Hit Url "/getData" with getDataBasicInput payload
-    Then Response returns valid getDataBasicOutput json
+    Then Response returns valid json in response to getDataBasicOutput
 
   Scenario Outline: Test <datasetName> getData call works
     Given I'm using the production API environment
