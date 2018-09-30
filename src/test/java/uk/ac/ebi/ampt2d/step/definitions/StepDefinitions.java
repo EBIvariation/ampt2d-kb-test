@@ -165,7 +165,6 @@ public class StepDefinitions {
         String inputPayloadTemplate = jsonPayload.getPayload(jsonFile);
         String datasetPayload = inputPayloadTemplate.replaceAll("INPUT_DATASET", datasetName);
         response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
-        System.out.println(response.extract().body().asString());
     }
 
     @Then("^Response returns error that did not find property in metadata for filter$")
