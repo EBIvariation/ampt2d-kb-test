@@ -80,7 +80,7 @@ public class StepDefinitions {
     }
 
     @Then("^Response returns status is Up$")
-    public void returnStatusCode() {
+    public void responseReturnsStatusIsUp() {
         response.contentType(ContentType.TEXT).body(containsString("\"message\":\"service is up, World\""));
     }
 
@@ -91,20 +91,20 @@ public class StepDefinitions {
     }
 
     @Then("^Response returns .* without error$")
-    public void responseReturnsMetadata() throws Throwable {
+    public void responseReturnsOutputWithoutError() throws Throwable {
         response.body("is_error", equalTo(false));
     }
 
     @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload$")
-    public void hitUrlWithRequestForCommonPropertyData(String path, String jsonFile) throws Throwable {
-        String payload = jsonPayload.getPayload(jsonFile);
-        response = request.contentType(ContentType.JSON).body(payload.toString()).post(path).then();
+    public void hitUrlWithRequestWithBasicInputData(String path, String jsonFile) throws Throwable {
+        String inputPayload = jsonPayload.getPayload(jsonFile);
+        response = request.contentType(ContentType.JSON).body(inputPayload.toString()).post(path).then();
     }
 
-    @Then("^Response returns valid json in response to (.*?)$")
+    @Then("^Response returns valid json in response same as expected in (.*?)$")
     public void responseReturnsValidJson(String jsonFile) throws Throwable {
-        String payload = jsonPayload.getPayload(jsonFile);
-        response.contentType(ContentType.JSON).body(equalTo(payload));
+        String outputPayload = jsonPayload.getPayload(jsonFile);
+        response.contentType(ContentType.JSON).body(equalTo(outputPayload));
     }
 
     @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of dataset ([^ ]*)$")
@@ -122,13 +122,13 @@ public class StepDefinitions {
     }
 
     @And("^Response contains all the phenotypes of (.*)$")
-    public void responseContainsAllThePhenotypesOfTheDatasetName(String datasetName) throws Throwable {
+    public void responseContainsAllThePhenotypesOfTheDataset(String datasetName) throws Throwable {
         List<String> expectedPhenotypes = getDatasetToPhenotypes().get(datasetName);
         expectedPhenotypes.stream().forEach(expectedPhenotype -> response.body(containsString(expectedPhenotype)));
     }
 
     @And("^None of the properties in the response is null$")
-    public void noneOfThePropertiesInHteResponseIsNullForTheDataset() throws Throwable {
+    public void noneOfThePropertiesInTheResponseIsNullForTheDataset() throws Throwable {
         response.body(not(containsString("null")));
     }
 
@@ -139,8 +139,8 @@ public class StepDefinitions {
 
     @And("^Response returns with valid output data of ([^ ]*) contained in ([^ ]*)$")
     public void responseReturnsWithValidOutputDataOfEachDataset(String datasetName, String jsonFile) throws Exception {
-        String payload = jsonPayload.getPayload(jsonFile);
-        JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetName).toString(), response.extract().body().asString(),
+        String outputPayload = jsonPayload.getPayload(jsonFile);
+        JSONAssert.assertEquals(JsonPath.read(outputPayload, "$." + datasetName).toString(), response.extract().body().asString(),
                 true);
     }
 
@@ -162,18 +162,10 @@ public class StepDefinitions {
     @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*)$")
     public void hitUrlWithRequestForIndividualDatasetForGetSampleData(String path, String jsonFile, String datasetName)
             throws Throwable {
-        String payload = jsonPayload.getPayload(jsonFile);
-        String datasetPayload = payload.replaceAll("INPUT_DATASET", datasetName);
+        String inputPayloadTemplate = jsonPayload.getPayload(jsonFile);
+        String datasetPayload = inputPayloadTemplate.replaceAll("INPUT_DATASET", datasetName);
         response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
-    }
-
-    @And("^Response returns with valid sampleData of ([^ ]*) contained in (.*)$")
-    public void responseReturnsWithValidSampleDataForDataset(String datasetName, String jsonFile) throws Throwable {
-        String payload = jsonPayload.getPayload(jsonFile);
         System.out.println(response.extract().body().asString());
-        System.out.println(JsonPath.read(payload, "$." + datasetName).toString());
-        JSONAssert.assertEquals(JsonPath.read(payload, "$." + datasetName).toString(), response.extract().body().asString(),
-                true);
     }
 
     @Then("^Response returns error that did not find property in metadata for filter$")
@@ -183,11 +175,12 @@ public class StepDefinitions {
     }
 
     @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*) with (\\w*) phenotype$")
-    public void hitGetSampleDataWithSAMPLES_GWAS_EXTEND_mdvAndT2DPhenotype(String path, String jsonFile,
+    public void hitGetSampleDataWithDatasetAndPhenotype(String path, String jsonFile,
           String datasetName, String phenotype) throws Throwable {
         String datasetPayload = jsonPayload.getPayload(jsonFile);
         datasetPayload = datasetPayload.replaceAll("INPUT_DATASET", datasetName);
         datasetPayload = datasetPayload.replaceAll("BMI", phenotype);
+        datasetPayload = datasetPayload.replaceAll("HDL_ADJ", phenotype);
         response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
     }
 

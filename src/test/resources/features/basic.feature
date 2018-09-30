@@ -23,9 +23,9 @@ Feature: Knowledge Base Basic Endpoints Testing
   Scenario: Assert Production KB getMetadata returns valid json
     Given I'm using the production API environment
     When Hit Url "/getMetadata"
-    Then Response returns valid json in response to getMetadata
+    Then Response returns valid json in response same as expected in getMetadata
 
   Scenario: Assert Production KB getSampleMetadata returns valid json
     Given I'm using the production API environment
     When Hit Url "/getSampleMetadata"
-    Then Response returns valid json in response to getSampleMetadata
+    Then Response returns valid json in response same as expected in getSampleMetadata

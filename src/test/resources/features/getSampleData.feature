@@ -9,7 +9,7 @@ Feature: Knowledge Base getSampleData endpoint Testing
     Given I'm using the production API environment
     When Hit Url "/getSampleData" with getSampleDataDatasetsInput payload of sample dataset <datasetName>
     Then Number of records returned is greater than zero
-    And Response returns with valid sampleData of <datasetName> contained in getSampleDataDatasetsOutput
+    And Response returns with valid output data of <datasetName> contained in getSampleDataDatasetsOutput
     Examples:
       | datasetName                           |
       | SAMPLES_GWAS_EXTEND_mdv1              |
@@ -36,4 +36,4 @@ Feature: Knowledge Base getSampleData endpoint Testing
     Given I'm using the production API environment
     When Hit Url "/getSampleData" with getSampleDataDatasetsInput payload of sample dataset SAMPLES_GWAS_EXTEND_mdv1 with t2d phenotype
     Then Number of records returned is greater than zero
-    And Response returns with valid sampleData of SAMPLES_GWAS_EXTEND_mdv1_T2D contained in getSampleDataDatasetsOutput
+    And Response returns with valid output data of SAMPLES_GWAS_EXTEND_mdv1_T2D contained in getSampleDataDatasetsOutput
