@@ -38,4 +38,5 @@ pipeline {
             to: 'selva@ebi.ac.uk')
          cucumber fileIncludePattern: 'target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
      }
+  }
 }
