@@ -17,26 +17,26 @@ pipeline {
     success {
         echo "Test succeeded"
         mail(bcc: '',
-            body: "Run ${JOB_NAME}-#${BUILD_NUMBER} succeeded. \
-            To get more details, visit the build results page: ${BUILD_URL}.",
-             cc: '',
+            body: "Run ${JOB_NAME}-#${BUILD_NUMBER} succeeded.\n \
+                   To get more details, visit the build results page: ${BUILD_URL}.",
+            cc: '',
             from: 'amp-dev@ebi.ac.uk',
-             replyTo: '',
-             subject: "${JOB_NAME} ${BUILD_NUMBER} succeeded",
-             to: 'selva@ebi.ac.uk')
-        cucumber fileIncludePattern: 'target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
+            replyTo: '',
+            subject: "${JOB_NAME} ${BUILD_NUMBER} succeeded",
+            to: 'selva@ebi.ac.uk')
+        cucumber fileIncludePattern: 'target/cucumber.json', sortingMethod: 'ALPHABETICAL'
      }
     failure {
          echo "Test failed"
          mail(bcc: '',
-            body: "Run ${JOB_NAME}-#${BUILD_NUMBER} failed. \
-            To get more details, visit the build results page:${BUILD_URL}.",
+            body: "Run ${JOB_NAME}-#${BUILD_NUMBER} failed.\n \
+                   To get more details, visit the build results page:${BUILD_URL}.",
             cc: '',
             from: 'amp-dev@ebi.ac.uk',
             replyTo: '',
             subject: "${JOB_NAME} ${BUILD_NUMBER} failed",
             to: 'selva@ebi.ac.uk')
-         cucumber fileIncludePattern: 'target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
+         cucumber fileIncludePattern: 'target/cucumber.json', sortingMethod: 'ALPHABETICAL'
      }
   }
 }
