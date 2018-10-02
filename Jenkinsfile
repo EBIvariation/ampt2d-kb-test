@@ -20,7 +20,7 @@ pipeline {
             body: "Run ${JOB_NAME}-#${BUILD_NUMBER} succeeded. \
             To get more details, visit the build results page: ${BUILD_URL}.",
              cc: '',
-            from: 'amp-dev@ebi.ac.uk.com',
+            from: 'amp-dev@ebi.ac.uk',
              replyTo: '',
              subject: "${JOB_NAME} ${BUILD_NUMBER} succeeded",
              to: 'selva@ebi.ac.uk')
@@ -32,7 +32,7 @@ pipeline {
             body: "Run ${JOB_NAME}-#${BUILD_NUMBER} failed. \
             To get more details, visit the build results page:${BUILD_URL}.",
             cc: '',
-            from: 'amp-dev@ebi.ac.uk.com',
+            from: 'amp-dev@ebi.ac.uk',
             replyTo: '',
             subject: "${JOB_NAME} ${BUILD_NUMBER} failed",
             to: 'selva@ebi.ac.uk')
