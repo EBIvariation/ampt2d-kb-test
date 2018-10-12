@@ -13,7 +13,7 @@ pipeline {
           }
        }
   }
-  post{
+  post {
     failure {
          echo "Test failed"
          mail(bcc: '',

@@ -67,14 +67,14 @@ public class StepDefinitions {
         }
     }
 
-    @Given("^I'm using the production API environment$")
+    @Given("^A configured API environment$")
     public void givenEnvironment() {
         request.given()
                 .contentType(ContentType.JSON)
                 .baseUri(knowledgeBaseApi.getBaseUri());
     }
 
-    @When("^Hit Url \"([^\"]*)\"$")
+    @When("^Hit URL \"([^\"]*)\"$")
     public void whenHitGetRequest(String path) {
         response = request.get(path).then();
     }
@@ -84,7 +84,7 @@ public class StepDefinitions {
         response.contentType(ContentType.TEXT).body(containsString("\"message\":\"service is up, World\""));
     }
 
-    @Then("^Response returns api version$")
+    @Then("^Response returns API version$")
     public void responseReturnsApiVersion() throws Throwable {
         response.body("is_error", equalTo(false));
         response.body("api_version", equalTo(knowledgeBaseApi.getApiVersion()));
@@ -95,20 +95,20 @@ public class StepDefinitions {
         response.body("is_error", equalTo(false));
     }
 
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload$")
-    public void hitUrlWithRequestWithBasicInputData(String path, String jsonFile) throws Throwable {
+    @When("^Hit URL \"([^\"]*)\" with ([^ ]*) payload$")
+    public void hitURLWithRequestWithBasicInputData(String path, String jsonFile) throws Throwable {
         String inputPayload = jsonPayload.getPayload(jsonFile);
         response = request.contentType(ContentType.JSON).body(inputPayload.toString()).post(path).then();
     }
 
-    @Then("^Response returns valid json in response same as expected in (.*?)$")
+    @Then("^Response is the expected JSON (.*?)$")
     public void responseReturnsValidJson(String jsonFile) throws Throwable {
         String outputPayload = jsonPayload.getPayload(jsonFile);
         response.contentType(ContentType.JSON).body(equalTo(outputPayload));
     }
 
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of dataset ([^ ]*)$")
-    public void hitUrlWithRequestForIndividualDatasetForGetData(String path, String jsonFile, String datasetName)
+    @When("^Hit URL \"([^\"]*)\" with ([^ ]*) payload of dataset ([^ ]*)$")
+    public void hitURLWithRequestForIndividualDatasetForGetData(String path, String jsonFile, String datasetName)
             throws Throwable {
         String payload = jsonPayload.getPayload(jsonFile);
         Map<String, List<String>> datasetsToPhenotypes = getDatasetToPhenotypes();
@@ -144,8 +144,8 @@ public class StepDefinitions {
                 true);
     }
 
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) with ([^ ]*) and unknown phenotype\\(([^)]*)\\)$")
-    public void hitGetDataUrlWithUnknownPhenotype(String path, String jsonFile, String datasetName, String phenotype)
+    @When("^Hit URL \"([^\"]*)\" with ([^ ]*) dataset and ([^ ]*) phenotype using ([^ ]*) payload$")
+    public void hitGetDataURLWithUnknownPhenotype(String path, String jsonFile, String datasetName, String phenotype)
             throws Throwable {
         String inputPayload = jsonPayload.getPayload(jsonFile);
         inputPayload = inputPayload.replaceAll("INPUT_DATASET", datasetName);
@@ -159,8 +159,8 @@ public class StepDefinitions {
         response.body(not(containsString("BETA"))).body(not(containsString("P_VALUE")));
     }
 
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*)$")
-    public void hitUrlWithRequestForIndividualDatasetForGetSampleData(String path, String jsonFile, String datasetName)
+    @When("^Hit URL \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*)$")
+    public void hitURLWithRequestForIndividualDatasetForGetSampleData(String path, String jsonFile, String datasetName)
             throws Throwable {
         String inputPayloadTemplate = jsonPayload.getPayload(jsonFile);
         String datasetPayload = inputPayloadTemplate.replaceAll("INPUT_DATASET", datasetName);
@@ -173,7 +173,7 @@ public class StepDefinitions {
         response.body("error_message", startsWith("Did not find property in metadata for filter"));
     }
 
-    @When("^Hit Url \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*) with (\\w*) phenotype$")
+    @When("^Hit URL \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*) with (\\w*) phenotype$")
     public void hitGetSampleDataWithDatasetAndPhenotype(String path, String jsonFile,
           String datasetName, String phenotype) throws Throwable {
         String datasetPayload = jsonPayload.getPayload(jsonFile);
