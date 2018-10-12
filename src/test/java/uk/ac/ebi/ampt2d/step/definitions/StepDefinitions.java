@@ -145,7 +145,7 @@ public class StepDefinitions {
     }
 
     @When("^Hit URL \"([^\"]*)\" with ([^ ]*) dataset and ([^ ]*) phenotype using ([^ ]*) payload$")
-    public void hitGetDataURLWithUnknownPhenotype(String path, String jsonFile, String datasetName, String phenotype)
+    public void hitGetDataURLWithUnknownPhenotype(String path, String datasetName, String phenotype, String jsonFile)
             throws Throwable {
         String inputPayload = jsonPayload.getPayload(jsonFile);
         inputPayload = inputPayload.replaceAll("INPUT_DATASET", datasetName);
@@ -175,7 +175,7 @@ public class StepDefinitions {
 
     @When("^Hit URL \"([^\"]*)\" with ([^ ]*) payload of sample dataset (\\w*) with (\\w*) phenotype$")
     public void hitGetSampleDataWithDatasetAndPhenotype(String path, String jsonFile,
-          String datasetName, String phenotype) throws Throwable {
+                                                        String datasetName, String phenotype) throws Throwable {
         String datasetPayload = jsonPayload.getPayload(jsonFile);
         datasetPayload = datasetPayload.replaceAll("INPUT_DATASET", datasetName);
         datasetPayload = datasetPayload.replaceAll("BMI", phenotype);

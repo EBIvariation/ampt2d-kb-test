@@ -44,6 +44,3 @@ Feature: Knowledge Base getData endpoint Testing
     When Hit URL "/getData" with AMPLOAD_36_mdv1 dataset and ADIPONECTIN phenotype using getDataDatasetsInput payload
     Then Number of records returned is greater than zero
     And Response returns output of AMPLOAD_36_mdv1 without BETA and P_Value
-
-
-
