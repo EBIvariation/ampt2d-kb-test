@@ -1,0 +1,19 @@
+{
+  "SAMPLES_GWAS_EXTEND_mdv1":{"is_error":false,"stats":{"pValue":0.7501671137437106,"beta":-0.0054163764616511805,"stdError":0.017009556237477214,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.03875510668710652,"ciUpper":0.02792235376380416}},
+
+  "SAMPLES_GWAS_OxBB_mdv2":{"is_error":false,"stats":{"pValue":0.19187057637467173,"beta":0.020673166462961353,"stdError":0.015839198957467944,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.010371663493675815,"ciUpper":0.051717996419598525}},
+
+  "SAMPLES_AMPLOAD_36_mdv1":{"is_error":false,"stats":{"pValue":0.03015356479008851,"beta":-0.057594545383590864,"stdError":0.026553576520941247,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.10963955536463571,"ciUpper":-0.005549535402546019}},
+
+  "SAMPLES_AMPLOAD_7_exome_mdv1":{"is_error":false,"stats":{"pValue":0.031224782403173792,"beta":0.04807382176824475,"stdError":0.022309638263820472,"numInputVariants":1,"ciLevel":0.95,"ciLower":0.0043469307711566235,"ciUpper":0.09180071276533287}},
+
+  "SAMPLES_AMPLOAD_7_metabo_mdv1":{"is_error":false,"stats":{"pValue":0.36798737856871866,"beta":-0.01640666108109313,"stdError":0.018223368031041857,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.052124462421935164,"ciUpper":0.019311140259748904}},
+
+  "SAMPLES_AMPLOAD_7_affymetrix_mdv1":{"is_error":false,"stats":{"pValue":0.16990171501474396,"beta":-0.04070621961482009,"stdError":0.029650061841278007,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.09882034082372498,"ciUpper":0.0174079015940848}},
+
+  "SAMPLES_AMPLOAD_7_broad_mdv1":{"is_error":false,"stats":{"pValue":0.6123519914905872,"beta":0.01746638854857716,"stdError":0.03446379550586513,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.0500826506429185,"ciUpper":0.08501542774007281}},
+
+  "SAMPLES_AMPLOAD_7_illumina_mdv1":{"is_error":false,"stats":{"pValue":0.033898168883491904,"beta":0.06333810121045808,"stdError":0.029843160610360436,"numInputVariants":1,"ciLevel":0.95,"ciLower":0.004845506414151622,"ciUpper":0.12183069600676452}},
+
+  "SAMPLES_GWAS_EXTEND_mdv1_T2D":{"is_error":false,"stats":{"pValue":0.011849846593455069,"beta":-0.13866917424934708,"stdError":0.05510213216597969,"numCases":1347,"numControls":5796,"numCaseCarriers":655,"numControlCarriers":3010,"numCaseVariants":763,"numControlVariants":3557,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.24666935329466727,"ciUpper":-0.030668995204026883}}
+}
