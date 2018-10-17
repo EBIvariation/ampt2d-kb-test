@@ -28,6 +28,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.http.HttpStatus;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,18 +80,23 @@ public class StepDefinitions {
         response = request.get(path).then();
     }
 
-    @Then("^Response returns status is Up$")
-    public void responseReturnsStatusIsUp() {
+    @Then("^Response return HTTP status OK$")
+    public void responseReturnHTTPstatusOK() throws Throwable {
+        response.statusCode(HttpStatus.SC_OK);
+    }
+
+    @And("^Response returns status is Up$")
+    public void responseReturnsstatusIsUp() {
         response.contentType(ContentType.TEXT).body(containsString("\"message\":\"service is up, World\""));
     }
 
-    @Then("^Response returns API version$")
+    @And("^Response returns API version$")
     public void responseReturnsApiVersion() throws Throwable {
         response.body("is_error", equalTo(false));
         response.body("api_version", equalTo(knowledgeBaseApi.getApiVersion()));
     }
 
-    @Then("^Response returns .* without error$")
+    @And("^Response returns .* without error$")
     public void responseReturnsOutputWithoutError() throws Throwable {
         response.body("is_error", equalTo(false));
     }
@@ -101,7 +107,7 @@ public class StepDefinitions {
         response = request.contentType(ContentType.JSON).body(inputPayload.toString()).post(path).then();
     }
 
-    @Then("^Response is the expected JSON (.*?)$")
+    @And("^Response is the expected JSON (.*?)$")
     public void responseReturnsValidJson(String jsonFile) throws Throwable {
         String outputPayload = jsonPayload.getPayload(jsonFile);
         response.contentType(ContentType.JSON).body(equalTo(outputPayload));
@@ -116,7 +122,7 @@ public class StepDefinitions {
         response = request.contentType(ContentType.JSON).body(datasetPayload.toString()).post(path).then();
     }
 
-    @Then("^Number of records returned is greater than zero$")
+    @And("^Number of records returned is greater than zero$")
     public void numberOfRecordsReturnedIsGreaterThanZero() throws Throwable {
         response.body("numRecords", greaterThan(0));
     }
@@ -145,7 +151,7 @@ public class StepDefinitions {
     }
 
     @When("^Hit URL \"([^\"]*)\" with ([^ ]*) dataset and ([^ ]*) phenotype using ([^ ]*) payload$")
-    public void hitGetDataURLWithUnknownPhenotype(String path, String datasetName, String phenotype, String jsonFile)
+    public void hitGetDataURLWithDatasetAndPhenotype(String path, String datasetName, String phenotype, String jsonFile)
             throws Throwable {
         String inputPayload = jsonPayload.getPayload(jsonFile);
         inputPayload = inputPayload.replaceAll("INPUT_DATASET", datasetName);
@@ -202,5 +208,4 @@ public class StepDefinitions {
         }
         return datasetToPhenotypes;
     }
-
 }

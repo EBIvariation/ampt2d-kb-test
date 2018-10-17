@@ -3,12 +3,14 @@ Feature: Knowledge Base getData endpoint Testing
   Scenario: Test Production KB is Up
     Given A configured API environment
     When Hit URL "/heartbeat"
-    Then Response returns status is Up
+    Then Response return HTTP status OK
+    And Response returns status is Up
 
   Scenario: Test basic getData call works
     Given A configured API environment
     When Hit URL "/getData" with getDataBasicInput payload
-    Then Response returns data without error
+    Then Response return HTTP status OK
+    And Response returns data without error
     And Number of records returned is greater than zero
     And None of the properties in the response is null
     And Response is the expected JSON getDataBasicOutput
@@ -16,7 +18,8 @@ Feature: Knowledge Base getData endpoint Testing
   Scenario Outline: Test <datasetName> getData call works
     Given A configured API environment
     When Hit URL "/getData" with getDataDatasetsInput payload of dataset <datasetName>
-    Then Number of records returned is greater than zero
+    Then Response return HTTP status OK
+    And Number of records returned is greater than zero
     And None of the properties in the response is null
     And Response contains all the phenotypes of <datasetName>
     And BETA and P_Value is returned for all phenotypes

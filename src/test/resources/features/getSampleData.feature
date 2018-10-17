@@ -3,12 +3,14 @@ Feature: Knowledge Base getSampleData endpoint Testing
   Scenario: Test Production KB is Up
     Given A configured API environment
     When Hit URL "/heartbeat"
-    Then Response returns status is Up
+    Then Response return HTTP status OK
+    And Response returns status is Up
 
   Scenario Outline: Test <datasetName> getSampleData call works
     Given A configured API environment
     When Hit URL "/getSampleData" with getSampleDataDatasetsInput payload of sample dataset <datasetName>
-    Then Number of records returned is greater than zero
+    Then Response return HTTP status OK
+    And Number of records returned is greater than zero
     And Response returns with valid output data of <datasetName> contained in getSampleDataDatasetsOutput
     Examples:
       | datasetName                           |
@@ -35,5 +37,6 @@ Feature: Knowledge Base getSampleData endpoint Testing
   Scenario: Test getSampleData with SAMPLES_GWAS_EXTEND_mdv1 with t2d phenotype
     Given A configured API environment
     When Hit URL "/getSampleData" with getSampleDataDatasetsInput payload of sample dataset SAMPLES_GWAS_EXTEND_mdv1 with t2d phenotype
-    Then Number of records returned is greater than zero
+    Then Response return HTTP status OK
+    And Number of records returned is greater than zero
     And Response returns with valid output data of SAMPLES_GWAS_EXTEND_mdv1_T2D contained in getSampleDataDatasetsOutput
