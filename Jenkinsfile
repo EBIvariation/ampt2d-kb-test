@@ -1,7 +1,6 @@
 pipeline {
   triggers{
-    when { branch 'master' }
-    cron("H 10 * * *")
+    cron(env.BRANCH_NAME == 'master'? 'H 10 * * *' : '')
     }
   agent {
     docker {
