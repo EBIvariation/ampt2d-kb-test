@@ -1,5 +1,8 @@
 pipeline {
-  triggers{ cron("H 10 * * *") }
+  triggers{
+    when { branch 'master' }
+    cron("H 10 * * *")
+    }
   agent {
     docker {
       image 'maven:3.5.2-jdk-8'
@@ -9,11 +12,13 @@ pipeline {
     stage('Build') {
           steps {
             sh 'mvn clean test'
-            cucumber 'target/cucumber.json'
           }
        }
   }
   post {
+    always{
+        cucumber 'target/cucumber.json'
+     }
     failure {
          echo "Test failed"
          mail(bcc: '',
