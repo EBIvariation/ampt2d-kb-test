@@ -28,6 +28,8 @@ Feature: Knowledge Base getSampleData endpoint Testing
       | SAMPLES_AMPLOAD_7_illumina_mdv1       |
       | SAMPLES_AMPLOAD_7_affymetrix_GRS_mdv1 |
       | SAMPLES_AMPLOAD_7_broad_GRS_mdv1      |
+      | SAMPLES_AMPLOAD_52_mdv1               |
+      | SAMPLES_AMPLOAD_52_GRS_mdv1           |
 
   Scenario: Test getSampleData with UNKNOWN_DATASET returns error
     Given A configured API environment
