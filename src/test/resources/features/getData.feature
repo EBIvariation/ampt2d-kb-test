@@ -35,6 +35,7 @@ Feature: Knowledge Base getData endpoint Testing
       | AMPLOAD_7_illumina_mdv1   |
       | GWAS_OxBB_mdv25           |
       | AMPLOAD_7_exome_mdv1      |
+      | AMPLOAD_52_mdv1           |
 
   Scenario: Test getData for UNKNOWN_DATASET returns empty properties
     Given A configured API environment

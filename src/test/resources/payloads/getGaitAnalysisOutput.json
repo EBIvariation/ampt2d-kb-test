@@ -1,7 +1,7 @@
 {
   "SAMPLES_GWAS_EXTEND_mdv1":{"is_error":false,"stats":{"pValue":0.7501671137437106,"beta":-0.0054163764616511805,"stdError":0.017009556237477214,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.03875510668710652,"ciUpper":0.02792235376380416}},
 
-  "SAMPLES_GWAS_OxBB_mdv2":{"is_error":false,"stats":{"pValue":0.19187057637467173,"beta":0.020673166462961353,"stdError":0.015839198957467944,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.010371663493675815,"ciUpper":0.051717996419598525}},
+  "SAMPLES_GWAS_OxBB_mdv2":{"is_error":false,"stats":{"pValue":0.504492756491504,"beta":-0.010552140482444804,"stdError":0.015809123897940768,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.04153802332240871,"ciUpper":0.020433742357519102}},
 
   "SAMPLES_AMPLOAD_36_mdv1":{"is_error":false,"stats":{"pValue":0.03015356479008851,"beta":-0.057594545383590864,"stdError":0.026553576520941247,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.10963955536463571,"ciUpper":-0.005549535402546019}},
 
@@ -15,5 +15,7 @@
 
   "SAMPLES_AMPLOAD_7_illumina_mdv1":{"is_error":false,"stats":{"pValue":0.033898168883491904,"beta":0.06333810121045808,"stdError":0.029843160610360436,"numInputVariants":1,"ciLevel":0.95,"ciLower":0.004845506414151622,"ciUpper":0.12183069600676452}},
 
-  "SAMPLES_GWAS_EXTEND_mdv1_T2D":{"is_error":false,"stats":{"pValue":0.011849846593455069,"beta":-0.13866917424934708,"stdError":0.05510213216597969,"numCases":1347,"numControls":5796,"numCaseCarriers":655,"numControlCarriers":3010,"numCaseVariants":763,"numControlVariants":3557,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.24666935329466727,"ciUpper":-0.030668995204026883}}
+  "SAMPLES_GWAS_EXTEND_mdv1_T2D":{"is_error":false,"stats":{"pValue":0.011849846593455069,"beta":-0.13866917424934708,"stdError":0.05510213216597969,"numCases":1347,"numControls":5796,"numCaseCarriers":655,"numControlCarriers":3010,"numCaseVariants":763,"numControlVariants":3557,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.24666935329466727,"ciUpper":-0.030668995204026883}},
+
+  "SAMPLES_AMPLOAD_52_mdv1":{"is_error":false,"stats":{"pValue":0.4788638480782256,"beta":-0.024871887485271898,"stdError":0.03511642144612749,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.09370007351968178,"ciUpper":0.043956298549137976}}
 }

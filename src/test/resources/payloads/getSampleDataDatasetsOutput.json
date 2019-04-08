@@ -42,5 +42,12 @@
     "distribution_array":[{"start_value":0.0,"end_value":31.5481,"count":1363},{"start_value":31.5481,"end_value":63.0962,"count":520}],"passback":"123abc"},
 
   "SAMPLES_GWAS_EXTEND_mdv1_T2D":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
-    "distribution_array":[{"start_value":1.0,"end_value":1.5,"count":5796},{"start_value":1.5,"end_value":2.0,"count":1347}],"passback":"123abc"}
+    "distribution_array":[{"start_value":1.0,"end_value":1.5,"count":5796},{"start_value":1.5,"end_value":2.0,
+      "count":1347}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_52_mdv1": {"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":26.8054,"count":588},{"start_value":26.8054,"end_value":53.6108,"count":1385}],"passback":"123abc"},
+
+  "SAMPLES_AMPLOAD_52_GRS_mdv1":{"is_error":false,"numRecords":2,"result_format":"verbose","distribution":true,
+    "distribution_array":[{"start_value":0.0,"end_value":26.8054,"count":588},{"start_value":26.8054,"end_value":53.6108,"count":1385}],"passback":"123abc"}
 }
