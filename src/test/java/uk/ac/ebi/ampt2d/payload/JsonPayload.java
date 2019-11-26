@@ -35,6 +35,9 @@ public class JsonPayload {
     private static final String GET_GAIT_ANALYSIS_INPUT = "getGaitAnalysisInput";
     private static final String GET_GAIT_ANALYSIS_OUTPUT = "getGaitAnalysisOutput";
 
+    private static final String GET_METADATAOX = "getMetadataOx";
+    private static final String GET_SAMPLE_METADATAOX = "getSampleMetadataOx";
+
     private String getMetadata;
     private String getSampleMetadata;
     private String getDataDatasetsInput;
@@ -45,6 +48,9 @@ public class JsonPayload {
     private String getSampleDataDatasetsOutput;
     private String getGaitAnalysisInput;
     private String getGaitAnalysisOutput;
+
+    private String getMetadataOx;
+    private String getSampleMetadataOx;
 
     public JsonPayload() throws Exception {
         getMetadata = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
@@ -67,6 +73,11 @@ public class JsonPayload {
                 .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_INPUT + JSON_FILE_EXTENSION).toURI())));
         getGaitAnalysisOutput = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_OUTPUT + JSON_FILE_EXTENSION).toURI())));
+
+        getMetadataOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_METADATAOX + JSON_FILE_EXTENSION).toURI())));
+        getSampleMetadataOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_SAMPLE_METADATAOX + JSON_FILE_EXTENSION).toURI())));
     }
 
     public String getMetadata() {
@@ -107,6 +118,15 @@ public class JsonPayload {
 
     public String getGaitAnalysisOutput() {
         return getGaitAnalysisOutput;
+    }
+
+
+    public String getMetadataOx() {
+        return getMetadataOx;
+    }
+
+    public String getSampleMetadataOx() {
+        return getSampleMetadataOx;
     }
 
     public String getPayload(String payloadName) throws Exception {

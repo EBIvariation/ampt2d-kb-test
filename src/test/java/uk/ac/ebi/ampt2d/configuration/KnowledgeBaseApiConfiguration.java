@@ -28,7 +28,7 @@ import uk.ac.ebi.ampt2d.KnowledgeBaseApi;
 public class KnowledgeBaseApiConfiguration {
 
     @Bean
-    @ConfigurationProperties(prefix = "kb.ebi")
+    @ConfigurationProperties(prefix = "kb.node")
     public KnowledgeBaseApi getKnowledgeBaseApi() {
         return new KnowledgeBaseApi();
     }
