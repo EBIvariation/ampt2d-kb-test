@@ -39,6 +39,7 @@ public class JsonPayload {
     private static final String GET_SAMPLE_METADATAOX = "getSampleMetadataOx";
     private static final String GET_GAIT_ANALYSIS_INPUTOX = "getGaitAnalysisInputOx";
     private static final String GET_GAIT_ANALYSIS_OUTPUTOX = "getGaitAnalysisOutputOx";
+    private static final String GET_DATA_DATASETS_OUTPUTOX = "getDataDatasetsOutputOx";
 
     private String getMetadata;
     private String getSampleMetadata;
@@ -55,6 +56,7 @@ public class JsonPayload {
     private String getSampleMetadataOx;
     private String getGaitAnalysisInputOx;
     private String getGaitAnalysisOutputOx;
+    private String getDataDatasetsOutputOx;
 
     public JsonPayload() throws Exception {
         getMetadata = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
@@ -86,6 +88,8 @@ public class JsonPayload {
                 .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_INPUTOX + JSON_FILE_EXTENSION).toURI())));
         getGaitAnalysisOutputOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_OUTPUTOX + JSON_FILE_EXTENSION).toURI())));
+        getDataDatasetsOutputOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_DATA_DATASETS_OUTPUTOX + JSON_FILE_EXTENSION).toURI())));
 
     }
 
@@ -146,6 +150,9 @@ public class JsonPayload {
         return getGaitAnalysisOutputOx;
     }
 
+    public String getDataDatasetsOutputOx() {
+        return getDataDatasetsOutputOx;
+    }
 
     public String getPayload(String payloadName) throws Exception {
         return this.getClass().getDeclaredMethod(payloadName).invoke(this).toString();
