@@ -40,6 +40,7 @@ public class JsonPayload {
     private static final String GET_GAIT_ANALYSIS_INPUTOX = "getGaitAnalysisInputOx";
     private static final String GET_GAIT_ANALYSIS_OUTPUTOX = "getGaitAnalysisOutputOx";
     private static final String GET_DATA_DATASETS_OUTPUTOX = "getDataDatasetsOutputOx";
+    private static final String GET_SAMPLE_DATA_DATASETS_OUTPUTOX = "getSampleDataDatasetsOutputOx";
 
     private String getMetadata;
     private String getSampleMetadata;
@@ -57,6 +58,7 @@ public class JsonPayload {
     private String getGaitAnalysisInputOx;
     private String getGaitAnalysisOutputOx;
     private String getDataDatasetsOutputOx;
+    private String getSampleDataDatasetsOutputOx;
 
     public JsonPayload() throws Exception {
         getMetadata = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
@@ -90,6 +92,8 @@ public class JsonPayload {
                 .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_OUTPUTOX + JSON_FILE_EXTENSION).toURI())));
         getDataDatasetsOutputOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + GET_DATA_DATASETS_OUTPUTOX + JSON_FILE_EXTENSION).toURI())));
+        getSampleDataDatasetsOutputOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_SAMPLE_DATA_DATASETS_OUTPUTOX + JSON_FILE_EXTENSION).toURI())));
 
     }
 
@@ -152,6 +156,10 @@ public class JsonPayload {
 
     public String getDataDatasetsOutputOx() {
         return getDataDatasetsOutputOx;
+    }
+
+    public String getSampleDataDatasetsOutputOx() {
+        return getSampleDataDatasetsOutputOx;
     }
 
     public String getPayload(String payloadName) throws Exception {
