@@ -1,0 +1,3 @@
+{
+  "samples_OxBB_mdv25":{"is_error":false,"stats":{"pValue":0.504492756491504,"beta":-0.010552140482444804,"stdError":0.015809123897940768,"numInputVariants":1,"ciLevel":0.95,"ciLower":-0.04153802332240871,"ciUpper":0.020433742357519102}}
+}

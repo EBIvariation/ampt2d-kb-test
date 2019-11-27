@@ -37,6 +37,8 @@ public class JsonPayload {
 
     private static final String GET_METADATAOX = "getMetadataOx";
     private static final String GET_SAMPLE_METADATAOX = "getSampleMetadataOx";
+    private static final String GET_GAIT_ANALYSIS_INPUTOX = "getGaitAnalysisInputOx";
+    private static final String GET_GAIT_ANALYSIS_OUTPUTOX = "getGaitAnalysisOutputOx";
 
     private String getMetadata;
     private String getSampleMetadata;
@@ -51,6 +53,8 @@ public class JsonPayload {
 
     private String getMetadataOx;
     private String getSampleMetadataOx;
+    private String getGaitAnalysisInputOx;
+    private String getGaitAnalysisOutputOx;
 
     public JsonPayload() throws Exception {
         getMetadata = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
@@ -78,6 +82,11 @@ public class JsonPayload {
                 .getResource(PAYLOAD_PATH + "/" + GET_METADATAOX + JSON_FILE_EXTENSION).toURI())));
         getSampleMetadataOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + GET_SAMPLE_METADATAOX + JSON_FILE_EXTENSION).toURI())));
+        getGaitAnalysisInputOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_INPUTOX + JSON_FILE_EXTENSION).toURI())));
+        getGaitAnalysisOutputOx = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_OUTPUTOX + JSON_FILE_EXTENSION).toURI())));
+
     }
 
     public String getMetadata() {
@@ -128,6 +137,15 @@ public class JsonPayload {
     public String getSampleMetadataOx() {
         return getSampleMetadataOx;
     }
+
+    public String getGaitAnalysisInputOx() {
+        return getGaitAnalysisInputOx;
+    }
+
+    public String getGaitAnalysisOutputOx() {
+        return getGaitAnalysisOutputOx;
+    }
+
 
     public String getPayload(String payloadName) throws Exception {
         return this.getClass().getDeclaredMethod(payloadName).invoke(this).toString();
