@@ -23,15 +23,3 @@ Feature: Knowledge Base Basic Endpoints Testing OXFORD
     When Hit URL "/getSampleMetadata"
     Then Response return HTTP status OK
     And Response returns getSampleMetadata without error
-
-  Scenario: Assert Production KB getMetadata returns valid json
-    Given A configured API environment
-    When Hit URL "/getMetadata"
-    Then Response return HTTP status OK
-    And Response is the expected JSON getMetadataOx
-
-  Scenario: Assert Production KB getSampleMetadata returns valid json
-    Given A configured API environment
-    When Hit URL "/getSampleMetadata"
-    Then Response return HTTP status OK
-    And Response is the expected JSON getSampleMetadataOx
