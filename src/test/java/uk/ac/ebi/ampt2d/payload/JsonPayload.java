@@ -109,7 +109,6 @@ public class JsonPayload {
         return getGaitAnalysisOutput;
     }
 
-
     public String getPayload(String payloadName) throws Exception {
         return this.getClass().getDeclaredMethod(payloadName).invoke(this).toString();
     }

@@ -35,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.ebi.ampt2d.KnowledgeBaseApi;
+import uk.ac.ebi.ampt2d.KnowledgeBaseApiOx;
 import uk.ac.ebi.ampt2d.configuration.KnowledgeBaseApiConfiguration;
 import uk.ac.ebi.ampt2d.payload.JsonPayload;
 
@@ -59,6 +60,9 @@ public class StepDefinitions {
     private KnowledgeBaseApi knowledgeBaseApi;
     private RequestSpecification request;
     private ValidatableResponse response;
+
+    @Autowired
+    private KnowledgeBaseApiOx knowledgeBaseApiOx;
 
     @Before
     public void before(Scenario scenario) throws Exception {
@@ -208,4 +212,19 @@ public class StepDefinitions {
         }
         return datasetToPhenotypes;
     }
+
+    // Oxford specific test scenarios
+    @Given("^A configured OX API environment$")
+    public void givenEnvironmentOx() {
+        request.given()
+                .contentType(ContentType.JSON)
+                .baseUri(knowledgeBaseApiOx.getBaseUri());
+    }
+
+    @And("^Response returns OX API version$")
+    public void responseReturnsApiVersionOx() throws Throwable {
+        response.body("is_error", equalTo(false));
+        response.body("api_version", equalTo(knowledgeBaseApiOx.getApiVersion()));
+    }
+
 }

@@ -22,14 +22,22 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.ac.ebi.ampt2d.KnowledgeBaseApi;
+import uk.ac.ebi.ampt2d.KnowledgeBaseApiOx;
 
 @Configuration
 @EnableConfigurationProperties
 public class KnowledgeBaseApiConfiguration {
 
     @Bean
-    @ConfigurationProperties(prefix = "kb.node")
+    @ConfigurationProperties(prefix = "kb.ebi")
     public KnowledgeBaseApi getKnowledgeBaseApi() {
         return new KnowledgeBaseApi();
     }
+
+    @Bean
+    @ConfigurationProperties(prefix = "kb.oxford")
+    public KnowledgeBaseApiOx getKnowledgeBaseApiOx() {
+        return new KnowledgeBaseApiOx();
+    }
+
 }
