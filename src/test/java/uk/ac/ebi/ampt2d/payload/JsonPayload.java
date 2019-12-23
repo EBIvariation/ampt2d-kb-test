@@ -33,6 +33,7 @@ public class JsonPayload {
     private static final String GET_SAMPLE_DATA_DATASETS_INPUT = "getSampleDataDatasetsInput";
     private static final String GET_SAMPLE_DATA_DATASETS_OUTPUT = "getSampleDataDatasetsOutput";
     private static final String GET_GAIT_ANALYSIS_INPUT = "getGaitAnalysisInput";
+    private static final String GET_GAIT_ANALYSIS_INPUT_AMPLOAD52 = "getGaitAnalysisInputAmpLoad52";
     private static final String GET_GAIT_ANALYSIS_OUTPUT = "getGaitAnalysisOutput";
 
     private String getMetadata;
@@ -44,6 +45,7 @@ public class JsonPayload {
     private String getSampleDataDatasetsInput;
     private String getSampleDataDatasetsOutput;
     private String getGaitAnalysisInput;
+    private String getGaitAnalysisInputAmpLoad52;
     private String getGaitAnalysisOutput;
 
     public JsonPayload() throws Exception {
@@ -67,6 +69,8 @@ public class JsonPayload {
                 .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_INPUT + JSON_FILE_EXTENSION).toURI())));
         getGaitAnalysisOutput = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
                 .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_OUTPUT + JSON_FILE_EXTENSION).toURI())));
+        getGaitAnalysisInputAmpLoad52 = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader()
+                .getResource(PAYLOAD_PATH + "/" + GET_GAIT_ANALYSIS_INPUT_AMPLOAD52 + JSON_FILE_EXTENSION).toURI())));
     }
 
     public String getMetadata() {
@@ -107,6 +111,10 @@ public class JsonPayload {
 
     public String getGaitAnalysisOutput() {
         return getGaitAnalysisOutput;
+    }
+
+    public String getGaitAnalysisInputAmpLoad52() {
+        return getGaitAnalysisInputAmpLoad52;
     }
 
     public String getPayload(String payloadName) throws Exception {
