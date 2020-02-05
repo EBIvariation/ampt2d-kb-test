@@ -22,7 +22,13 @@ Feature: Knowledge Base Gait Analysis endpoint Testing
       | SAMPLES_AMPLOAD_7_affymetrix_mdv1 |
       | SAMPLES_AMPLOAD_7_broad_mdv1      |
       | SAMPLES_AMPLOAD_7_illumina_mdv1   |
-      | SAMPLES_AMPLOAD_52_mdv1           |
+
+  Scenario: Test SAMPLES_AMPLOAD_52_mdv1 Gait Analysis works
+    Given A configured API environment
+    When Hit URL "/burden/v1" with getGaitAnalysisInputAmpLoad52 payload of sample dataset SAMPLES_AMPLOAD_52_mdv1
+    Then Response return HTTP status OK
+    And Response returns output without error
+    And Response returns with valid output data of SAMPLES_AMPLOAD_52_mdv1 contained in getGaitAnalysisOutput
 
   Scenario: Test SAMPLES_GWAS_EXTEND_mdv1 with t2d phenotype Gait Analysis works
     Given A configured API environment

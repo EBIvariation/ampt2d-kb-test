@@ -1,0 +1,8 @@
+{"covariates":["C1","C2","C3","AGE","HEIGHT_CM","WEIGHT_KG"],
+  "dataset_id":"INPUT_DATASET",
+  "variants":["8_118184783_C_T"],
+  "ci_level":0.94,
+  "phenotype":"HDL_ADJ",
+  "calc_ci":true,
+  "filters":[{"operand_type":"STRING","value":"ZZZZZ","dataset_id":"INPUT_DATASET","phenotype":"b","operand":"ID","operator":"GT"}]
+}
