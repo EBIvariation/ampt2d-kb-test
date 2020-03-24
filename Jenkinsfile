@@ -18,7 +18,8 @@ pipeline {
     always{
         cucumber 'target/cucumber.json'
      }
-    failure {
+
+    /* failure {
          echo "Test failed"
          mail(bcc: '',
             body: "Run ${JOB_NAME}-#${BUILD_NUMBER} failed.\n\
@@ -29,6 +30,7 @@ pipeline {
             replyTo: '',
             subject: "${JOB_NAME} ${BUILD_NUMBER} failed",
             to: 'amp-dev@ebi.ac.uk')
-     }
+     } */
+
   }
 }
